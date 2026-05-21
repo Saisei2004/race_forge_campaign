@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Circuit Forge Campaign</title>
+    <link rel="stylesheet" href="styles.css?v=onchain-1">
+  </head>
+  <body>
+    <main class="race-shell" aria-label="Circuit Forge AI Race">
+      <canvas id="raceCanvas" width="1600" height="900" aria-label="Top down AI racing game"></canvas>
+
+      <section class="top-hud" aria-label="Race status">
+        <div class="title-block">
+          <span>Sepolia Contract Concept</span>
+          <h1>Circuit Forge Campaign</h1>
+          <p id="dayMeta">DAY 1 / 6 - Forest GP</p>
+        </div>
+
+        <div class="race-clock">
+          <span>TIME</span>
+          <strong id="raceTime">00.00</strong>
+        </div>
+
+        <div class="leaderboard" aria-label="Race standings">
+          <span>POSITION</span>
+          <ol id="standings"></ol>
+        </div>
+      </section>
+
+      <section class="bottom-panel" aria-label="Upgrade controls">
+        <div class="upgrade-points" aria-label="Ethereum upgrade spend">
+          <span>ETH PAID</span>
+          <strong id="upgradePoints">0.000</strong>
+        </div>
+
+        <button id="upgradeControl" class="upgrade-card control-card" type="button">
+          <span class="stat-icon control-icon" aria-hidden="true"></span>
+          <span><b id="controlLevel">CONTROL Lv.1</b><small>カーブ制御</small></span>
+        </button>
+
+        <button id="upgradeSpeed" class="upgrade-card speed-card" type="button">
+          <span class="stat-icon speed-icon" aria-hidden="true"></span>
+          <span><b id="speedLevel">SPEED Lv.1</b><small>最高速度</small></span>
+        </button>
+
+        <button id="upgradeAccel" class="upgrade-card accel-card" type="button">
+          <span class="stat-icon accel-icon" aria-hidden="true"></span>
+          <span><b id="accelLevel">ACCEL Lv.1</b><small>加速度</small></span>
+        </button>
+
+        <button id="startRace" class="start-button" type="button">START</button>
+        <button id="resetRace" class="reset-button" type="button">RETRY</button>
+      </section>
+
+      <aside class="race-note" aria-live="polite">
+        <strong id="raceState">READY</strong>
+        <span id="raceLog">ETHで何度でも強化できます。負けてもレベルは保持されます。</span>
+      </aside>
+
+      <section class="course-panel" aria-label="Campaign schedule">
+        <span>SCHEDULE</span>
+        <div id="courseButtons"></div>
+      </section>
+
+      <section class="onchain-panel" aria-label="Sepolia contract controls">
+        <span>ON-CHAIN</span>
+        <strong id="walletLabel">Wallet: not connected</strong>
+        <small id="chainLabel">Sepolia contract: 0x56f1...693d</small>
+        <div class="onchain-row">
+          <button id="connectWallet" type="button">CONNECT</button>
+          <button id="createOnchainCar" type="button">CREATE CAR</button>
+        </div>
+        <label class="car-id-field">
+          <span>carId</span>
+          <input id="onchainCarId" type="number" min="0" value="0">
+        </label>
+        <div class="onchain-row">
+          <button id="onchainControl" type="button">CONTROL</button>
+          <button id="onchainSpeed" type="button">SPEED</button>
+          <button id="onchainAccel" type="button">ACCEL</button>
+        </div>
+        <p id="onchainStatus">MetaMask接続後、Sepolia上の実コントラクトを呼び出せます。</p>
+      </section>
+    </main>
+
+    <script src="game.js?v=submit-ready-1"></script>
+    <script type="module" src="onchain.js?v=onchain-1"></script>
+  </body>
+</html>

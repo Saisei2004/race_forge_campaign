@@ -1,0 +1,643 @@
+:root {
+  color-scheme: light;
+  --ink: #132330;
+  --panel: rgba(16, 31, 43, 0.9);
+  --line: #203848;
+  --paper: rgba(248, 253, 247, 0.9);
+  --green: #4fc26b;
+  --cyan: #43c4e8;
+  --amber: #f3b13c;
+  --red: #ef5048;
+  --blue: #4169e1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #64c878;
+  color: var(--ink);
+}
+
+button {
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.race-shell {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #65c975;
+}
+
+#raceCanvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.top-hud,
+.bottom-panel,
+.race-note,
+.course-panel {
+  position: absolute;
+  z-index: 5;
+}
+
+.top-hud {
+  top: 20px;
+  left: 24px;
+  right: 24px;
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) 190px minmax(260px, 1fr);
+  gap: 18px;
+  align-items: start;
+  pointer-events: none;
+}
+
+.title-block,
+.race-clock,
+.leaderboard,
+.race-note,
+.course-panel,
+.upgrade-points,
+.upgrade-card,
+.start-button,
+.reset-button {
+  border: 4px solid var(--line);
+  border-radius: 14px;
+  box-shadow:
+    inset 0 4px 0 rgba(255,255,255,0.28),
+    0 6px 0 rgba(0,0,0,0.2);
+}
+
+.title-block,
+.race-clock,
+.leaderboard,
+.course-panel {
+  background: var(--panel);
+  color: #fff;
+}
+
+.title-block {
+  padding: 14px 18px;
+}
+
+.title-block span,
+.race-clock span,
+.leaderboard span {
+  display: block;
+  color: #8ff1cc;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.title-block h1 {
+  margin: 5px 0 0;
+  font-size: clamp(24px, 2.7vw, 40px);
+  line-height: 1;
+  text-shadow: 0 3px 0 rgba(0,0,0,0.28);
+}
+
+.title-block p {
+  margin: 8px 0 0;
+  color: #e9fff8;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.race-clock {
+  display: grid;
+  place-items: center;
+  min-height: 82px;
+  padding: 10px;
+}
+
+.race-clock strong {
+  color: #fff;
+  font-size: 36px;
+  font-weight: 1000;
+  line-height: 1;
+  text-shadow: 0 3px 0 rgba(0,0,0,0.3);
+}
+
+.leaderboard {
+  justify-self: end;
+  width: min(34vw, 430px);
+  padding: 12px 14px;
+}
+
+#standings {
+  display: grid;
+  gap: 4px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+#standings li {
+  display: grid;
+  grid-template-columns: 22px 18px 1fr auto;
+  align-items: center;
+  gap: 7px;
+  min-height: 26px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 850;
+}
+
+#standings i {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.82);
+  border-radius: 5px;
+}
+
+#standings em {
+  color: #d9fff2;
+  font-style: normal;
+  font-size: 12px;
+}
+
+.bottom-panel {
+  left: 50%;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: translateX(-50%);
+}
+
+.upgrade-points {
+  display: grid;
+  place-items: center;
+  min-width: 104px;
+  min-height: 78px;
+  padding: 8px 10px;
+  background: linear-gradient(#20394c, #102234);
+  color: #fff;
+}
+
+.upgrade-points span {
+  color: #8ff1cc;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.upgrade-points strong {
+  margin-top: -2px;
+  font-size: 25px;
+  font-weight: 1000;
+  line-height: 1;
+  color: #ffd85a;
+  text-shadow: 0 3px 0 rgba(0,0,0,0.24);
+}
+
+.upgrade-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 196px;
+  min-height: 84px;
+  padding: 10px 12px;
+  background: linear-gradient(#2d4156, #132333);
+  color: #fff;
+  text-align: left;
+}
+
+.upgrade-card b,
+.upgrade-card small {
+  display: block;
+}
+
+.upgrade-card b {
+  font-size: 18px;
+  font-weight: 1000;
+}
+
+.upgrade-card small {
+  margin-top: 3px;
+  color: #d7e9ef;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.upgrade-card:disabled {
+  opacity: 0.58;
+  cursor: not-allowed;
+}
+
+.stat-icon {
+  position: relative;
+  flex: 0 0 56px;
+  width: 56px;
+  height: 56px;
+  border: 3px solid #203848;
+  border-radius: 14px;
+  background: linear-gradient(#f7fbff, #bfd4df);
+  box-shadow: inset 0 -5px 0 rgba(0,0,0,0.12);
+}
+
+.control-icon::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 6px solid var(--cyan);
+  border-radius: 999px;
+}
+
+.control-icon::after {
+  content: "";
+  position: absolute;
+  left: 25px;
+  top: 8px;
+  width: 6px;
+  height: 40px;
+  border-radius: 99px;
+  background: #203848;
+  transform: rotate(-36deg);
+}
+
+.speed-icon::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 12px;
+  height: 25px;
+  border: 5px solid var(--red);
+  border-bottom: 0;
+  border-radius: 40px 40px 0 0;
+}
+
+.speed-icon::after {
+  content: "";
+  position: absolute;
+  left: 27px;
+  top: 25px;
+  width: 5px;
+  height: 19px;
+  border-radius: 99px;
+  background: #203848;
+  transform: rotate(50deg);
+}
+
+.accel-icon::before {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 12px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50% 50% 8px;
+  background: var(--amber);
+  transform: rotate(-45deg);
+}
+
+.accel-icon::after {
+  content: "";
+  position: absolute;
+  left: 21px;
+  top: 24px;
+  width: 14px;
+  height: 20px;
+  border-radius: 10px;
+  background: #fff7c2;
+}
+
+.start-button,
+.reset-button {
+  min-height: 72px;
+  padding: 0 26px;
+  font-size: 20px;
+  font-weight: 1000;
+}
+
+.start-button {
+  min-width: 124px;
+  background: linear-gradient(#ffba3c, #ff6a20 58%, #c93612);
+  color: #fff;
+  text-shadow: 0 3px 0 rgba(122,28,12,0.5);
+}
+
+.reset-button {
+  min-width: 110px;
+  background: linear-gradient(#f7fbff, #d7e5ed);
+  color: #1b3042;
+}
+
+.start-button:disabled,
+.reset-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.race-note {
+  left: 24px;
+  bottom: 124px;
+  max-width: 390px;
+  padding: 12px 14px;
+  background: var(--paper);
+}
+
+.race-note strong {
+  display: block;
+  color: #0f6f78;
+  font-size: 13px;
+  font-weight: 1000;
+  letter-spacing: 0.08em;
+}
+
+.race-note span {
+  display: block;
+  margin-top: 5px;
+  color: #213645;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.course-panel {
+  right: 24px;
+  bottom: 124px;
+  width: min(34vw, 430px);
+  padding: 12px 14px;
+}
+
+.onchain-panel {
+  position: absolute;
+  z-index: 6;
+  right: 24px;
+  top: 132px;
+  width: min(34vw, 430px);
+  padding: 12px 14px;
+  border: 4px solid var(--line);
+  border-radius: 14px;
+  background: rgba(16, 31, 43, 0.92);
+  color: #fff;
+  box-shadow:
+    inset 0 4px 0 rgba(255,255,255,0.22),
+    0 6px 0 rgba(0,0,0,0.22);
+}
+
+.onchain-panel > span,
+.onchain-panel small,
+.car-id-field span {
+  color: #8ff1cc;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.onchain-panel strong,
+.onchain-panel small {
+  display: block;
+}
+
+.onchain-panel strong {
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 950;
+}
+
+.onchain-panel small {
+  margin-top: 4px;
+  color: #d9fff2;
+  text-transform: none;
+}
+
+.onchain-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.onchain-row:last-of-type {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.onchain-row button,
+.car-id-field input {
+  min-height: 36px;
+  border: 2px solid rgba(255,255,255,0.24);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 1000;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.15);
+}
+
+.onchain-row button:hover {
+  background: rgba(67,196,232,0.28);
+}
+
+.onchain-row button:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+.car-id-field {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.car-id-field input {
+  width: 100%;
+  padding: 0 10px;
+  color: #ffd85a;
+  font-family: Menlo, Consolas, monospace;
+}
+
+#onchainStatus {
+  min-height: 32px;
+  margin: 10px 0 0;
+  color: #e9fff8;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.course-panel > span {
+  display: block;
+  color: #8ff1cc;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.09em;
+}
+
+#courseButtons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  margin-top: 9px;
+}
+
+.course-button {
+  min-height: 54px;
+  padding: 7px 6px;
+  border: 2px solid rgba(255,255,255,0.24);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  text-align: left;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.15);
+}
+
+.course-button b,
+.course-button small {
+  display: block;
+}
+
+.course-button b {
+  font-size: 11px;
+  font-weight: 1000;
+  line-height: 1.1;
+}
+
+.course-button small {
+  margin-top: 3px;
+  color: #d9fff2;
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.course-button.active {
+  border-color: #ffd85a;
+  background: linear-gradient(#244a5d, #173142);
+  box-shadow:
+    inset 0 3px 0 rgba(255,255,255,0.22),
+    0 0 0 2px rgba(255,216,90,0.22);
+}
+
+.course-button.cleared {
+  border-color: rgba(143,241,204,0.62);
+  background: rgba(49, 151, 107, 0.34);
+}
+
+.course-button.locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.course-button:disabled {
+  cursor: default;
+}
+
+@media (max-width: 980px) {
+  .top-hud {
+    left: 14px;
+    right: 14px;
+    grid-template-columns: 1fr 132px 1fr;
+    gap: 8px;
+  }
+
+  .title-block {
+    padding: 11px 12px;
+  }
+
+  .title-block h1 {
+    font-size: 23px;
+  }
+
+  .race-clock {
+    min-height: 66px;
+  }
+
+  .race-clock strong {
+    font-size: 27px;
+  }
+
+  .leaderboard {
+    width: 260px;
+  }
+
+  #standings li {
+    font-size: 12px;
+  }
+
+  .bottom-panel {
+    gap: 8px;
+    transform: translateX(-50%) scale(0.78);
+    transform-origin: center bottom;
+  }
+
+  .race-note {
+    left: 14px;
+    bottom: 112px;
+    max-width: 320px;
+  }
+
+  .course-panel {
+    right: 14px;
+    bottom: 112px;
+    width: 300px;
+  }
+
+  .onchain-panel {
+    right: 14px;
+    top: 110px;
+    width: 300px;
+    transform: scale(0.88);
+    transform-origin: right top;
+  }
+
+  #courseButtons {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .title-block span,
+  .leaderboard span {
+    display: none;
+  }
+
+  .leaderboard {
+    width: 210px;
+  }
+
+  .bottom-panel {
+    transform: translateX(-50%) scale(0.62);
+  }
+
+  .race-note {
+    display: none;
+  }
+
+  .course-panel {
+    display: none;
+  }
+
+  .onchain-panel {
+    display: none;
+  }
+}
